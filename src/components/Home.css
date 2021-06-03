@@ -1,0 +1,33 @@
+div {
+    margin: 1rem auto;
+}
+
+form {
+    margin: 1rem auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+}
+
+input {
+    margin: auto 1rem;
+    border-radius: 0.5rem;
+}
+
+.add {
+    background-color: yellow;
+    border: 3px solid rgb(221, 182, 110);
+}
+
+#clear-inputs-button {
+    background-color: lightgrey;
+}
+
+#add-button {
+    background-color: green;
+}
+  
+#clear-cards-button {
+    background-color: cornsilk;
+}
+
