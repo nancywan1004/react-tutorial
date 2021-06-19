@@ -1,11 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Card from './Card';
 import './Home.css';
+
+async function getCards() {
+    return fetch('http://localhost:3001/cards')
+    .then((data) => data.json());
+}
+
+async function getCardsWithSeries(sType) {
+    return fetch(`http://localhost:3001/cards/${sType}`)
+    .then((data) => data.json());
+}
+
+async function addCard(name, url) {
+    const options = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            name: name,
+            url: url
+        })
+    }
+    return fetch('http://localhost:3001/cards', options)
+    .then((data) => data.json());
+}
 
 function Home() {
     const [name, setName] = useState('');
     const [url, setUrl] = useState('');
-    const [cards, setCards] = useState([{"name": "Centiskorch","url": "https://assets.pokemon.com/assets/cms2/img/cards/web/SWSH5/SWSH5_EN_30.png"},{"name": "Infernape","url": "https://assets.pokemon.com/assets/cms2/img/cards/web/XY11/XY11_EN_20.png"},{"name": "Talonflame","url": "https://assets.pokemon.com/assets/cms2/img/cards/web/SWSH3/SWSH3_EN_32.png"},{"name": "Tyflosion","url": "https://assets.pokemon.com/assets/cms2/img/cards/web/XY8/XY8_EN_20.png"},{"name": "Volcarona","url": "https://assets.pokemon.com/assets/cms2/img/cards/web/SWSH3/SWSH3_EN_30.png"}]);
+    const [cards, setCards] = useState([]);
+    const seriesType = useRef(null);
+
+    useEffect(() => {
+        let mounted = true; 
+        getCards().then(items => {
+            if (mounted) {
+                setCards(items);
+            }
+          });
+        return () => mounted = false; 
+      }, [])
 
     return (
         <div>
@@ -18,23 +52,36 @@ function Home() {
 					Url:
 					<input type="text" value={url} onChange={(e) => {setUrl(e.target.value)}} />
 				</label>
+                <input type="button" id="add-button" value="Add" onClick={() => {
+                    if (name === '' || url === '') {
+                        return;
+                    }
+                    addCard(name, url)
+                    .then(() => setCards([...cards, {name, url}]))
+                    .catch((err) => console.log(err));
+                }} />
                 <input type="button" id="clear-inputs-button" value="Clear inputs" onClick={() => {
                     setName('');
                     setUrl('');
                 }} />
                 <div>
-                <input type="button" id="add-button" value="Add" onClick={() => {
-                    if (name == '' || url == '') {
-                        return;
-                    }
-                    setCards([...cards, {name, url}]);
+                <label>Choose series:  </label>
+                <select ref={seriesType}>
+                    <option value="battle style">Battle Style</option>
+                    <option value="pokemon v">Pokemon V</option>
+                </select>
+                <input type="button" id="filter-cards-button" value="Filter cards" onClick={() => {
+                    const series = seriesType.current.value;
+                    getCardsWithSeries(series)
+                    .then((items) => setCards(items))
+                    .catch((err) => console.log(err));
                 }} />
                 <input type="button" id="clear-cards-button" value="Clear cards" onClick={() => {setCards([])}} />
                 </div>
 			</form>
                 {cards.map((elem, idx) => (
                         <div className='card-list' key={idx}>
-                            <Card name={elem.name} url={elem.url} handleDelete={() => {setCards(cards.filter((card) => card !== elem))}}/>
+                            <Card name={elem.name} url={elem.url} index={idx} handleDelete={() => {setCards(cards.filter((card) => card !== elem))}}/>
                         </div>
                     )
                 )}
