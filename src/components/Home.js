@@ -57,7 +57,7 @@ function Home() {
                         return;
                     }
                     addCard(name, url)
-                    .then(() => setCards([...cards, {name, url}]))
+                    .then((resp) => setCards([...cards, resp]))
                     .catch((err) => console.log(err));
                 }} />
                 <input type="button" id="clear-inputs-button" value="Clear inputs" onClick={() => {
@@ -67,6 +67,7 @@ function Home() {
                 <div>
                 <label>Choose series:  </label>
                 <select ref={seriesType}>
+                    <option selected="selected" value="">All</option>
                     <option value="battle style">Battle Style</option>
                     <option value="pokemon v">Pokemon V</option>
                 </select>
@@ -81,7 +82,11 @@ function Home() {
 			</form>
                 {cards.map((elem, idx) => (
                         <div className='card-list' key={idx}>
-                            <Card name={elem.name} url={elem.url} index={idx} handleDelete={() => {setCards(cards.filter((card) => card !== elem))}}/>
+                            <Card name={elem.name} url={elem.url} series={elem.series} id={elem._id} handleDelete={(resp) => {
+                                setCards(cards.filter((card) => card._id !== resp._id))
+                            }} handleSeriesUpdate={(resp) => {
+                                setCards(cards.map(card => (card._id === resp._id ? { ...card, series: resp.series } : card)));
+                            }}/>
                         </div>
                     )
                 )}

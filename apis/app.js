@@ -1,5 +1,6 @@
 var createError = require('http-errors');
 var express = require('express');
+const mongoose = require("mongoose");
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
@@ -9,6 +10,11 @@ var indexRouter = require('./routes/index');
 var cardsRouter = require('./routes/cards');
 
 var app = express();
+
+mongoose.connect('mongodb+srv://m001-student:m001-mongodb-basics@cluster0.zmzuj.mongodb.net/myFirstDatabase?retryWrites=true&w=majority', {useNewUrlParser: true},
+    () => {
+        console.log("Mongoose Is Connected");
+    });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
