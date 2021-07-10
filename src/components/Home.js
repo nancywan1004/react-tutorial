@@ -66,8 +66,8 @@ function Home() {
                 }} />
                 <div>
                 <label>Choose series:  </label>
-                <select ref={seriesType}>
-                    <option selected="selected" value="">All</option>
+                <select ref={seriesType} defaultValue="">
+                    <option value="">All</option>
                     <option value="battle style">Battle Style</option>
                     <option value="pokemon v">Pokemon V</option>
                 </select>
