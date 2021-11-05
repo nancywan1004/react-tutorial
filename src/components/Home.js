@@ -10,9 +10,6 @@ async function fetchCardsData() {
         let url = pokemon.url;
         return fetch(url)
           .then((response) => response.json())
-          .then((pokeData) => {
-            return pokeData;
-          })
           .catch((err) => console.log(err));
       });
     })
@@ -27,9 +24,6 @@ async function fetchCardsDatasWithAbility(ability) {
         let url = pokemon.pokemon.url;
         return fetch(url)
           .then((response) => response.json())
-          .then((pokeData) => {
-            return pokeData;
-          })
           .catch((err) => console.log(err));
       });
     })
