@@ -2,11 +2,21 @@ import React, { useState, useEffect, useRef } from 'react';
 import Card from './Card';
 import './Home.css';
 
+/* Task #1 */
+async function fetchPokemonResources(pokemon) {
+  // Task #1 TODO
+}
+
 function Home() {
   const [name, setName] = useState('');
   const [url, setUrl] = useState('');
   const [cards, setCards] = useState([]);
   const abilityType = useRef(null);
+
+  // Only called when the component first renders
+  useEffect(() => {
+    // Task #1 TODO
+  }, []);
 
   return (
     <div>
@@ -39,7 +49,7 @@ function Home() {
         <div className="card-list" key={idx}>
           <Card
             name={elem.name}
-            url={elem.sprites['front_default']}
+            imageUrl={elem.sprites['front_default']}
             ability={elem.ability}
           />
         </div>

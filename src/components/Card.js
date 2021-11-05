@@ -6,13 +6,10 @@ const Card = (props) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
     <div>
-      <div
-        onClick={() => {
-          setIsOpen(!isOpen);
-        }}
-      >
+      {/* Task #2 TODO */}
+      <div onClick={}>
         <p>{props.name}</p>
-        <img className="card-element" src={props.url} />
+        <img className="card-element" src={props.imageUrl} />
       </div>
       {isOpen && (
         <Popup
@@ -21,16 +18,10 @@ const Card = (props) => {
               <b>{props.name}</b>
               <p>
                 <b>Image source: </b>
-                {props.url}
+                {props.imageUrl}
               </p>
-              )
-              <button
-                onClick={() => {
-                  setIsOpen(!isOpen);
-                }}
-              >
-                Close
-              </button>
+              {/* Task #2 TODO */}
+              )<button onClick={}>Close</button>
             </>
           }
         />
