@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Popup from './Popup';
 import './Card.css';
 
 const Card = (props) => {
   const [isOpen, setIsOpen] = useState(false);
+  const seriesType = useRef(null);
   return (
     <div>
-      {/* Task #2 TODO */}
-      <div onClick={}>
+      <div
+        onClick={() => {
+          setIsOpen(!isOpen);
+        }}
+      >
         <p>{props.name}</p>
         <img className="card-element" src={props.imageUrl} />
       </div>
@@ -18,13 +22,24 @@ const Card = (props) => {
               <b>{props.name}</b>
               <p>
                 <b>Image source: </b>
-                {props.imageUrl}
+                {props.url}
               </p>
-              <p><b>Ability type: </b>
-              {/* Challenge TODO */}
+              <p>
+                <b>Ability type: </b>
+                {props.ability.map((ability, idx) => (
+                  <span key={idx}>
+                    {ability.ability.name}
+                    <br />
+                  </span>
+                ))}
               </p>
-              {/* Task #2 TODO */}
-              )<button onClick={}>Close</button>
+              <button
+                onClick={() => {
+                  setIsOpen(!isOpen);
+                }}
+              >
+                Close
+              </button>
             </>
           }
         />

@@ -4,6 +4,17 @@ import './Home.css';
 
 async function fetchPokemonResources(pokemon) {
   // Task #1 TODO
+  return fetch('https://pokeapi.co/api/v2/pokemon?limit=20')
+    .then((resp) => {
+      return resp.json();
+    })
+    .then((items) => {
+      return items.results.map((pokemon) => {
+        return fetch(pokemon.url).then((response) => {
+          return response.json();
+        });
+      });
+    });
 }
 
 function Home() {
@@ -15,6 +26,11 @@ function Home() {
   // Only called when the component first renders
   useEffect(() => {
     // Task #1 TODO
+    fetchPokemonResources().then((promises) => {
+      Promise.all(promises).then((resp) => {
+        setCards(resp);
+      });
+    });
   }, []);
 
   return (
