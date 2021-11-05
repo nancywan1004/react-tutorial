@@ -4,7 +4,6 @@ import './Card.css';
 
 const Card = (props) => {
   const [isOpen, setIsOpen] = useState(false);
-  const seriesType = useRef(null);
   return (
     <div>
       <div
@@ -26,12 +25,15 @@ const Card = (props) => {
               </p>
               <p>
                 <b>Ability type: </b>
-                {props.ability.map((ability, idx) => (
-                  <span key={idx}>
-                    {ability.ability.name}
-                    <br />
-                  </span>
-                ))}
+                {props.ability.map((ability, idx) => {
+                  console.log(ability);
+                  return (
+                    <span key={idx}>
+                      {ability.ability.name}
+                      <br />
+                    </span>
+                  );
+                })}
               </p>
               <button
                 onClick={() => {
