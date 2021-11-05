@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import Card from './Card';
 import './Home.css';
 
-/* Task #1 */
 async function fetchPokemonResources(pokemon) {
   // Task #1 TODO
 }
@@ -29,6 +28,7 @@ function Home() {
             <option value="stench">Stench</option>
             <option value="frisk">Frisk</option>
           </select>
+          {/* Challenge TODO */}
           <input
             type="button"
             id="filter-cards-button"

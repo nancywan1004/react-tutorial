@@ -20,6 +20,9 @@ const Card = (props) => {
                 <b>Image source: </b>
                 {props.imageUrl}
               </p>
+              <p><b>Ability type: </b>
+              {/* Challenge TODO */}
+              </p>
               {/* Task #2 TODO */}
               )<button onClick={}>Close</button>
             </>
