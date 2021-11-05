@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import Card from './Card';
 import './Home.css';
 
-async function getCards() {
+async function fetchCardsData() {
   return fetch('https://pokeapi.co/api/v2/pokemon?limit=20')
     .then((data) => data.json())
     .then((items) => {
@@ -19,7 +19,7 @@ async function getCards() {
     .catch((err) => console.log(err));
 }
 
-async function getCardsWithAbility(ability) {
+async function fetchCardsDatasWithAbility(ability) {
   return fetch(`https://pokeapi.co/api/v2/ability/${ability}`)
     .then((data) => data.json())
     .then((items) => {
@@ -36,30 +36,14 @@ async function getCardsWithAbility(ability) {
     .catch((err) => console.log(err));
 }
 
-async function addCard(name, url) {
-  const options = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      name: name,
-      url: url,
-    }),
-  };
-  return fetch('http://localhost:3001/cards', options).then((data) =>
-    data.json()
-  );
-}
-
 function Home() {
-  const [name, setName] = useState('');
-  const [url, setUrl] = useState('');
   const [cards, setCards] = useState([]);
   const abilityType = useRef(null);
 
   useEffect(() => {
     let mounted = true;
 
-    getCards().then((promises) => {
+    fetchCardsData().then((promises) => {
       if (mounted && promises) {
         Promise.all(promises).then((allPokemonData) => {
           setCards(allPokemonData);
@@ -87,16 +71,11 @@ function Home() {
             value="Filter cards"
             onClick={() => {
               const ability = abilityType.current.value;
-              getCardsWithAbility(ability)
+              fetchCardsDatasWithAbility(ability)
                 .then((promises) => {
-                  // if (items.pokemon) {
-                  // const promises = items.pokemon.map((pokemonData) => {
-                  //   return fetchPokemonData(pokemonData.pokemon);
-                  // });
                   Promise.all(promises).then((allPokemonData) => {
                     setCards(allPokemonData);
                   });
-                  // }
                 })
                 .catch((err) => console.log(err));
             }}
